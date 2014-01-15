@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block head %}
+{#    {{ block.super }}#}
+	<title>ScreenGrab | {% trans "Screenshots" %}</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+{% endblock %}
+{% block content %}
+<article>
+{% block page_title %}
+    <h1>{% trans "Screenshots" %}</h1>
+{% endblock page_title %}
+
+{% for shot in screenshot_list %}
+    <p style="text-align: center">
+        <a href="{{ shot.file.url }}"><img src="{{ shot.thumb.url }}" /></a>
+    </p>
+    <p style="text-align: center">{{ shot.description }}</p>
+{% empty %}
+    <p style="text-align: center; font-size: 300%">None</p>
+{% endfor %}
+{% block link_to_old %}
+    <p style="text-align: center"><a href="{% url 'shots-view-old' %}">{%  trans "Old screenshots" %}</a> </p>
+{% endblock link_to_old %}
+</article>
+{% endblock %}

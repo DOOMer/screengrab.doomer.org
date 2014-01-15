@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block head %}
+    <title>ScreenGrab | {% trans "Download" %}</title>
+    <meta name="keywords" content="screengrab, screenshot, application, windows, linux, download, скачать" />
+    <meta name="description" content="Screengrab - {% trans "crossplatform apllication for get screenshots" %}" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/download.css" type="text/css" media="screen, projection" />
+{% endblock %} 
+{% block content %}
+<article>
+<h1>{% trans "Download" %}</h1>
+{% regroup file_list by version as versions %}
+{% for version in versions %}
+{% if version.grouper == 0 %}
+<h1>{% trans "Stable version" %}</h2>
+{% elif version.grouper == 1 %}
+<h2>{% trans "Unstable version" %}</h2>
+{% endif %}
+	<ul id="file-list">{% for file in version.list %}
+		<li><a href="{{ file.slug }}/">{{ file.title }}</a></li>
+	{% endfor %}</ul>
+{% empty %}
+No any files :(
+{% endfor %}
+
+<div id="old-link"><a href="old/">{% trans "Old versions" %}</a></div>
+</article>
+{% endblock %}

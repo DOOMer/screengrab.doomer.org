@@ -1,0 +1,12 @@
+
+#old-link {
+	text-align: center;
+}
+
+ul#file-list {
+	list-style: none;	
+}
+
+ul#file-list li{
+	margin: 0.25em 1em;
+}

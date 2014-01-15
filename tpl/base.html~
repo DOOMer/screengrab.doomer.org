@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+{% block head %}
+	<meta charset="utf-8" />
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->	
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" media="screen, projection" />	
+	<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico">
+{% endblock head %}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-23458356-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+
+<div id="wrapper">
+	<header id="header">
+		<div id="header_wrapper">
+			{% load localeurl_tags %}
+			{% load locale_url from localeurl_future %}
+			<h1><a href="/{% if LANGUAGE_CODE != "en-us" %}{{LANGUAGE_CODE}}/ {% endif  %}">ScreenGrab</a></h1>
+			{% block mainmenu %}
+
+			<div id="langs">
+				<ul>
+				{% for lang in LANGUAGES %} 
+                    {% if lang.0 == LANGUAGE_CODE %}
+						<li class="lang_selected">{{ lang.1 }}</li>                    
+					{% else %}
+                        {% if LANGUAGE_CODE == "en-us" and lang.0 == "en" %}
+                            <li class="lang_selected">{{ lang.1 }}</li> 
+                        {% else %}
+                            <li><a href="{{ request.path|chlocale:lang.0 }}">{{ lang.1 }}</a></li> 
+                        {% endif %}
+					{% endif %}
+				{% endfor %}				
+				</ul>
+			</div>
+		</div>
+		{% load menubuilder %}{% menu main_menu %}
+		<nav id="nav">
+		    <ul>
+			{% for item in menuitems %}
+{% if item.external == 1 %}
+				<li><a href="{{ item.url }}" title="{{ item.title|escape }}" target="_blank">{{ item.title }}</a></li>
+{% else %}
+<li><a href="/{% if LANGUAGE_CODE != MODELTRANSLATION_DEFAULT_LANGUAGE and LANGUAGE_CODE != "en-us" %}{{LANGUAGE_CODE}}/{% endif %}
+			{{ item.url }}" title="{{ item.title|escape }}"
+			{% if item.target_blank == 1 %} target='_blank' {% endif %}>     
+			{{ item.title }}</a></li>
+{% endif %}
+			{% endfor %}
+			</ul>
+		</nav>
+		{% endblock %}
+	</header><!-- #header-->		 
+
+	<div id="content">		
+		{% block content %}
+		{% endblock %} 		
+	</div><!-- #content-->
+
+</div><!-- #wrapper -->
+
+<footer id="footer">
+	<div id="copyright">
+		Copyright &copy; 2009-2012, <a href="http://doomer.org/" rel="author"  class="link1">DOOMer</a>
+		<br />
+		All right reserved.
+	</div>
+	<div id="counters">
+		Copyright 2012, <a href="http://doomer.org/" class="link1">DOOMer</a>
+	</div>
+</footer><!-- #footer -->
+
+</body>
+</html>

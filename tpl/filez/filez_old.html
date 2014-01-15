@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block head %}
+    <title>ScreenGrab | {% trans "Download" %} | {% trans "Old versions" %}</title>
+    <meta name="keywords" content="screengrab, screenshot, application, windows, linux, download, скачать" />
+    <meta name="description" content="Screengrab - {% trans "crossplatform apllication for get screenshots" %}" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/download.css" type="text/css" media="screen, projection" />
+{% endblock %} 
+{% block content %}
+<article>
+<h1>{% trans "Download old versions" %}</h1>
+<ul id="file-list">{% for file in file_list %}
+    <li><a href="/download/{{ file.slug }}/">{{ file.title }}</a></li>    
+{% empty %}
+is empty
+{% endfor %}</ul>
+</article>
+{% endblock %} 
